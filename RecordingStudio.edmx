@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище RecordingStudioModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id_Clients" />
+          </Key>
+          <Property Name="Id_Clients" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Id_Employee" />
+          </Key>
+          <Property Name="Id_Employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff_Choice">
+          <Key>
+            <PropertyRef Name="Id_Staff_Choice" />
+          </Key>
+          <Property Name="Id_Staff_Choice" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clients_ID" Type="int" />
+          <Property Name="Employee_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Staff_Cho__Clien__4D94879B">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Staff_Choice" Type="Self.Staff_Choice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id_Clients" />
+            </Principal>
+            <Dependent Role="Staff_Choice">
+              <PropertyRef Name="Clients_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Staff_Cho__Emplo__4E88ABD4">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Staff_Choice" Type="Self.Staff_Choice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Id_Employee" />
+            </Principal>
+            <Dependent Role="Staff_Choice">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище RecordingStudioModelContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff_Choice" EntityType="Self.Staff_Choice" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Staff_Cho__Clien__4D94879B" Association="Self.FK__Staff_Cho__Clien__4D94879B">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Staff_Choice" EntitySet="Staff_Choice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Staff_Cho__Emplo__4E88ABD4" Association="Self.FK__Staff_Cho__Emplo__4E88ABD4">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Staff_Choice" EntitySet="Staff_Choice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecordingStudioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id_Clients" />
+          </Key>
+          <Property Name="Id_Clients" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staff_Choice" Relationship="Self.FK__Staff_Cho__Clien__4D94879B" FromRole="Clients" ToRole="Staff_Choice" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Id_Employee" />
+          </Key>
+          <Property Name="Id_Employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff_Choice" Relationship="Self.FK__Staff_Cho__Emplo__4E88ABD4" FromRole="Staff" ToRole="Staff_Choice" />
+        </EntityType>
+        <EntityType Name="Staff_Choice">
+          <Key>
+            <PropertyRef Name="Id_Staff_Choice" />
+          </Key>
+          <Property Name="Id_Staff_Choice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Clients_ID" Type="Int32" />
+          <Property Name="Employee_ID" Type="Int32" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Staff_Cho__Clien__4D94879B" FromRole="Staff_Choice" ToRole="Clients" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__Staff_Cho__Emplo__4E88ABD4" FromRole="Staff_Choice" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK__Staff_Cho__Clien__4D94879B">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Staff_Choice" Type="Self.Staff_Choice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id_Clients" />
+            </Principal>
+            <Dependent Role="Staff_Choice">
+              <PropertyRef Name="Clients_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Staff_Cho__Emplo__4E88ABD4">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Staff_Choice" Type="Self.Staff_Choice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="Id_Employee" />
+            </Principal>
+            <Dependent Role="Staff_Choice">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecordingStudioPractVersionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <EntitySet Name="Staff_Choice" EntityType="Self.Staff_Choice" />
+          <AssociationSet Name="FK__Staff_Cho__Clien__4D94879B" Association="Self.FK__Staff_Cho__Clien__4D94879B">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Staff_Choice" EntitySet="Staff_Choice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Staff_Cho__Emplo__4E88ABD4" Association="Self.FK__Staff_Cho__Emplo__4E88ABD4">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Staff_Choice" EntitySet="Staff_Choice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RecordingStudioModelContainer" CdmEntityContainer="RecordingStudioPractVersionEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="RecordingStudioModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Id_Clients" ColumnName="Id_Clients" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="RecordingStudioModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Id_Employee" ColumnName="Id_Employee" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff_Choice">
+            <EntityTypeMapping TypeName="RecordingStudioModel.Staff_Choice">
+              <MappingFragment StoreEntitySet="Staff_Choice">
+                <ScalarProperty Name="Id_Staff_Choice" ColumnName="Id_Staff_Choice" />
+                <ScalarProperty Name="Clients_ID" ColumnName="Clients_ID" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
